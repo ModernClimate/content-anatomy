@@ -43,7 +43,7 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 
 # Google service account — found in the JSON key file you downloaded
 GOOGLE_SERVICE_ACCOUNT_EMAIL=your-sa@your-project.iam.gserviceaccount.com
-GOOGLE_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----\n"
+GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----\n"
 
 # Optional — Google Drive folder ID to put new sheets into
 GOOGLE_DRIVE_FOLDER_ID=
