@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     const validLanes = new Set(swimLanes.map(s => s.label))
     const validCategories = new Set(colorCategories.map(c => c.label))
 
-    const auth = getGoogleAuth()
+    const auth = await getGoogleAuth()
     const sheets = getSheets(auth)
 
     const response = await sheets.spreadsheets.values.get({

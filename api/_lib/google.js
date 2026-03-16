@@ -1,6 +1,6 @@
 import { google } from 'googleapis'
 
-export function getGoogleAuth() {
+export async function getGoogleAuth() {
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
   const rawKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
 
@@ -9,10 +9,13 @@ export function getGoogleAuth() {
 
   const key = rawKey.replace(/\\n/g, '\n')
 
-  return new google.auth.JWT(email, null, key, [
+  const auth = new google.auth.JWT(email, null, key, [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
   ])
+
+  await auth.authorize()
+  return auth
 }
 
 export const getSheets = (auth) => google.sheets({ version: 'v4', auth })
