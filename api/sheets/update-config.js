@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, data: { updated: false, reason: 'No sheet connected yet' } })
     }
 
-    const auth = getGoogleAuth()
+    const auth = await getGoogleAuth()
     const sheets = getSheets(auth)
 
     // Overwrite reference data

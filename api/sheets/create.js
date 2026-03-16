@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
     await requireStrategist(supabase, user.id, projectId)
 
-    const auth = getGoogleAuth()
+    const auth = await getGoogleAuth()
     const sheets = getSheets(auth)
     const drive = getDrive(auth)
 
