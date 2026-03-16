@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useProjectStore } from '@/stores/useProjectStore'
 import { useAuthStore } from '@/stores/useAuthStore'
+import { Skeleton } from '@/components/ui/Skeleton'
 import { Plus } from 'lucide-react'
 
 export default function DashboardPage() {
@@ -26,7 +27,17 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      {loading && <p className="text-gray-400 text-sm">Loading projects...</p>}
+      {loading && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="bg-white border border-gray-200 rounded-xl p-5">
+              <Skeleton className="h-3 w-16 mb-2" />
+              <Skeleton className="h-4 w-full mb-4" />
+              <Skeleton className="h-8 w-full" />
+            </div>
+          ))}
+        </div>
+      )}
 
       {!loading && projects.length === 0 && (
         <div className="text-center py-24 text-gray-400">
