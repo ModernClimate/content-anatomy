@@ -1,20 +1,20 @@
 import { google } from 'googleapis'
 
 export async function getGoogleAuth() {
-  const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
-  const rawKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
+  const client_email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
+  const private_key = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(/\\n/g, '\n')
 
-  if (!email) throw new Error('Missing env var: GOOGLE_SERVICE_ACCOUNT_EMAIL')
-  if (!rawKey) throw new Error('Missing env var: GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY')
+  if (!client_email) throw new Error('Missing env var: GOOGLE_SERVICE_ACCOUNT_EMAIL')
+  if (!private_key) throw new Error('Missing env var: GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY')
 
-  const key = rawKey.replace(/\\n/g, '\n')
+  const auth = new google.auth.GoogleAuth({
+    credentials: { client_email, private_key },
+    scopes: [
+      'https://www.googleapis.com/auth/spreadsheets',
+      'https://www.googleapis.com/auth/drive'
+    ]
+  })
 
-  const auth = new google.auth.JWT(email, null, key, [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
-  ])
-
-  await auth.authorize()
   return auth
 }
 
