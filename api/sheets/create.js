@@ -11,6 +11,8 @@ export default async function handler(req, res) {
 
     await requireStrategist(supabase, user.id, projectId)
 
+    console.log('[DEBUG] service account:', process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL)
+    console.log('[DEBUG] key set:', !!process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY)
     const auth = await getGoogleAuth()
     const sheets = getSheets(auth)
     const drive = getDrive(auth)
