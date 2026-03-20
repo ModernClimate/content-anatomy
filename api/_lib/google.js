@@ -1,19 +1,16 @@
 import { google } from 'googleapis'
 
-export async function getGoogleAuth() {
-  const client_email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
-  const private_key = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(/\\n/g, '\n')
+export function getGoogleAuth() {
+  const clientId = process.env.GOOGLE_CLIENT_ID
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET
+  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN
 
-  if (!client_email) throw new Error('Missing env var: GOOGLE_SERVICE_ACCOUNT_EMAIL')
-  if (!private_key) throw new Error('Missing env var: GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY')
+  if (!clientId) throw new Error('Missing env var: GOOGLE_CLIENT_ID')
+  if (!clientSecret) throw new Error('Missing env var: GOOGLE_CLIENT_SECRET')
+  if (!refreshToken) throw new Error('Missing env var: GOOGLE_REFRESH_TOKEN')
 
-  const auth = new google.auth.GoogleAuth({
-    credentials: { client_email, private_key },
-    scopes: [
-      'https://www.googleapis.com/auth/spreadsheets',
-      'https://www.googleapis.com/auth/drive'
-    ]
-  })
+  const auth = new google.auth.OAuth2(clientId, clientSecret)
+  auth.setCredentials({ refresh_token: refreshToken })
 
   return auth
 }
